@@ -15,7 +15,7 @@ public class Driver {
    }
 
    private String serialize(Value v) {
-      return null;
+      return v.toString();
    }
    
    private String topEval(String expr) {
