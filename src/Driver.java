@@ -83,7 +83,16 @@ public class Driver {
    }
    
    private Value interp(ExprC e, Environment env) throws InvalidValueException {
-      if (e instanceof appC) {
+      if (e instanceof numC) {
+         return new numV(((numC) e).getNumber());
+      }
+      else if (e instanceof boolC) {
+         return new boolV(((boolC) e).getCase());
+      }
+      else if (e instanceof lamC) {
+         return new closV(((lamC) e).getParams(), ((lamC) e).getBody(), env);
+      }
+      else if (e instanceof appC) {
          ExprC appFunction = ((appC) e).getFunction();
          List<ExprC> appArgs = ((appC) e).getArgs();
          

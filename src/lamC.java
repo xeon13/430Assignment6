@@ -14,7 +14,7 @@ public class lamC extends ExprC {
       return this.params;
    }
    
-   private ExprC getBody() {
+   public ExprC getBody() {
       return this.body;
    }
 }
