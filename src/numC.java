@@ -9,4 +9,8 @@ public class numC extends ExprC {
    public double getNumber() {
       return this.n;
    }
+   
+   public boolean equals(numC other) {
+      return this.n == other.getNumber();
+   }
 }

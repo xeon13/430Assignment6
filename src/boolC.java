@@ -9,4 +9,12 @@ public class boolC extends ExprC {
    public String getCase() {
       return this.cas;
    }
+   
+   public boolean equals(boolC other) {
+      if (this.cas.equals(other.getCase())) {
+         return true;
+      }
+      
+      return false;
+   }
 }

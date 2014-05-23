@@ -21,4 +21,16 @@ public class binopC extends ExprC {
    public ExprC getRight() {
       return right;
    }
+   
+   public boolean equals(binopC other) {
+      boolean opEquals = this.opName.equals(other.getOpName());
+      boolean leftEquals = this.left.equals(other.getLeft());
+      boolean rightEquals = this.right.equals(other.getRight());
+      
+      if (opEquals && leftEquals && rightEquals) {
+         return true;
+      }
+      
+      return false;
+   }
 }

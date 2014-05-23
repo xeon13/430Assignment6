@@ -9,4 +9,12 @@ public class idC extends ExprC {
    public String getSymbol() {
       return this.s;
    }
+   
+   public boolean equals(idC other) {
+      if (this.s.equals(other.getSymbol())) {
+         return true;
+      }
+      
+      return false;
+   }
 }

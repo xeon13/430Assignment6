@@ -17,4 +17,27 @@ public class appC extends ExprC {
    public List<ExprC> getArgs() {
       return this.args;
    }
+   
+   public boolean equals(appC other) {
+      boolean functionEqual = this.function.equals(other.getFunction());
+      boolean argsEqual = true;
+      
+      if (this.args.size() == other.getArgs().size()) {
+         for (int i = 0; i < this.args.size(); i++) {
+            if (!this.args.get(i).equals(other.getArgs().get(i))) {
+               argsEqual = false;
+               break;
+            }
+         }
+      }
+      else {
+         argsEqual = false;
+      }
+      
+      if (functionEqual && argsEqual) {
+         return true;
+      }
+      
+      return false;
+   }
 }
