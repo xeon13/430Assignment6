@@ -10,7 +10,7 @@ public class numV extends Value {
       return "" + this.n;
    }
    
-   public boolean equals(numV other) {
+   public boolean equals(Object other) {
       if (this.toString().equals(other.toString())) {
          return true;
       }

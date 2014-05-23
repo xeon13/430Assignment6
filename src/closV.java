@@ -28,14 +28,14 @@ public class closV extends Value {
       return this.env;
    }
    
-   public boolean equals(closV other) {
+   public boolean equals(Object other) {
       boolean argsEqual = true;
-      boolean bodyEqual = this.body.equals(other.getBody());
-      boolean envEqual = this.env.equals(other.getEnv());
+      boolean bodyEqual = this.body.equals(((closV) other).getBody());
+      boolean envEqual = this.env.equals(((closV) other).getEnv());
       
-      if (this.args.size() == other.getArgs().size()) {
+      if (this.args.size() == ((closV) other).getArgs().size()) {
          for (int i = 0; i < this.args.size(); i++) {
-            if (!this.args.get(i).equals(other.getArgs().get(i))) {
+            if (!this.args.get(i).equals(((closV) other).getArgs().get(i))) {
                argsEqual = false;
                break;
             }

@@ -10,8 +10,8 @@ public class boolC extends ExprC {
       return this.cas;
    }
    
-   public boolean equals(boolC other) {
-      if (this.cas.equals(other.getCase())) {
+   public boolean equals(Object other) {
+      if (this.cas.equals(((boolC) other).getCase())) {
          return true;
       }
       

@@ -10,8 +10,8 @@ public class idC extends ExprC {
       return this.s;
    }
    
-   public boolean equals(idC other) {
-      if (this.s.equals(other.getSymbol())) {
+   public boolean equals(Object other) {
+      if (this.s.equals(((idC) other).getSymbol())) {
          return true;
       }
       

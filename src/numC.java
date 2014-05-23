@@ -10,7 +10,7 @@ public class numC extends ExprC {
       return this.n;
    }
    
-   public boolean equals(numC other) {
-      return this.n == other.getNumber();
+   public boolean equals(Object other) {
+      return this.n == ((numC) other).getNumber();
    }
 }

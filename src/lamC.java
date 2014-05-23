@@ -18,13 +18,13 @@ public class lamC extends ExprC {
       return this.body;
    }
    
-   public boolean equals(lamC other) {
+   public boolean equals(Object other) {
       boolean paramsEqual = true;
-      boolean bodyEqual = this.body.equals(other.body);
+      boolean bodyEqual = this.body.equals(((lamC) other).getBody());
       
-      if (this.params.size() == other.getParams().size()) {
+      if (this.params.size() == ((lamC) other).getParams().size()) {
          for (int i = 0; i < this.params.size(); i++) {
-            if (!this.params.get(i).equals(other.getParams().get(i))) {
+            if (!this.params.get(i).equals(((lamC) other).getParams().get(i))) {
                paramsEqual = false;
                break;
             }

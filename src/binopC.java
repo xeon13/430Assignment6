@@ -22,10 +22,10 @@ public class binopC extends ExprC {
       return right;
    }
    
-   public boolean equals(binopC other) {
-      boolean opEquals = this.opName.equals(other.getOpName());
-      boolean leftEquals = this.left.equals(other.getLeft());
-      boolean rightEquals = this.right.equals(other.getRight());
+   public boolean equals(Object other) {
+      boolean opEquals = this.opName.equals(((binopC) other).getOpName());
+      boolean leftEquals = this.left.equals(((binopC) other).getLeft());
+      boolean rightEquals = this.right.equals(((binopC) other).getRight());
       
       if (opEquals && leftEquals && rightEquals) {
          return true;

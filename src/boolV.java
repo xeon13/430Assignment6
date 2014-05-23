@@ -10,7 +10,7 @@ public class boolV extends Value {
       return this.cas;
    }
    
-   public boolean equals(boolV other) {
+   public boolean equals(Object other) {
       if(this.cas.equals(other.toString())) {
          return true;
       }

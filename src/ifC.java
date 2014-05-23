@@ -22,10 +22,10 @@ public class ifC extends ExprC {
       return this.falseCase;
    }
    
-   public boolean equals(ifC other) {
-      boolean casEqual = this.cas.equals(other.getCase());
-      boolean trueEqual = this.trueCase.equals(other.getTrue());
-      boolean falseEqual = this.falseCase.equals(other.getFalse());
+   public boolean equals(Object other) {
+      boolean casEqual = this.cas.equals(((ifC) other).getCase());
+      boolean trueEqual = this.trueCase.equals(((ifC) other).getTrue());
+      boolean falseEqual = this.falseCase.equals(((ifC) other).getFalse());
       
       if (casEqual && trueEqual && falseEqual) {
          return true;
