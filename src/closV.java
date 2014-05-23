@@ -15,4 +15,16 @@ public class closV extends Value {
    public String toString() {
       return "#<procedure>";
    }
+   
+   public List<String> getArgs() {
+      return this.args;
+   }
+   
+   public ExprC getBody() {
+      return this.body;
+   }
+   
+   public Environment getEnv() {
+      return this.env;
+   }
 }

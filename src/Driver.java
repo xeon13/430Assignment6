@@ -1,7 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Driver {
    static ArrayList<String> patternList = new ArrayList<String>();
-    
+   
    private static void patternInit() {
       patternList.add("true");                   //true
       patternList.add("false");                  //false
@@ -17,7 +22,7 @@ public class Driver {
       patternList.add("fn [\\w*] \\w");          //fn
       patternList.add("\\w \\w*");               //appc
    }
-	
+   
    public static void main(String[] args) {
       // TODO Auto-generated method stub
       patternInit();
@@ -77,8 +82,53 @@ public class Driver {
       return null;
    }
    
-   private Value interp(ExprC e, Environment env) {
+   private Value interp(ExprC e, Environment env) throws InvalidValueException {
+      if (e instanceof appC) {
+         ExprC appFunction = ((appC) e).getFunction();
+         List<ExprC> appArgs = ((appC) e).getArgs();
+         
+         Value fValue = interp(appFunction, env);
+         List<Value> interpedArgs = interpArgs(appArgs, env);
+         
+         if (fValue instanceof closV) {
+            Environment filledEnv = fillEnv(((closV) fValue).getArgs(), interpedArgs, ((closV) fValue).getEnv());
+            return interp(((closV) fValue).getBody(), filledEnv);
+         }
+         else {
+            throw new InvalidValueException();
+         }
+      }
+      
       return null;
+   }
+   
+   private List<Value> interpArgs(List<ExprC> args, Environment env) {
+      List<Value> toReturn = new ArrayList<Value>();
+      
+      for (ExprC arg : args) {
+         try {
+            toReturn.add(interp(arg, env));
+         } 
+         catch (InvalidValueException e) {
+            e.printStackTrace();
+         }
+      }
+      
+      return toReturn;
+   }
+   
+   private Environment fillEnv(List<String> params, List<Value> args, Environment initialEnv) throws IndexOutOfBoundsException {
+      Environment newEnv = new Environment(initialEnv);
+      
+      if (params.size() != args.size()) {
+         throw new IndexOutOfBoundsException();
+      }
+      
+      for (int i = 0; i < params.size(); i++) {
+         newEnv.add(params.get(i), args.get(i));
+      }
+      
+      return newEnv;
    }
 
    private String serialize(Value v) {
@@ -86,6 +136,13 @@ public class Driver {
    }
    
    private String topEval(String expr) {
-      return serialize(interp(parse(expr), new Environment()));
+      try {
+         return serialize(interp(parse(expr), new Environment()));
+      } 
+      catch (InvalidValueException e) {
+         e.printStackTrace();
+      }
+      
+      return null;
    }
 }
