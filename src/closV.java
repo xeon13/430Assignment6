@@ -27,4 +27,29 @@ public class closV extends Value {
    public Environment getEnv() {
       return this.env;
    }
+   
+   public boolean equals(closV other) {
+      boolean argsEqual = true;
+      boolean bodyEqual = this.body.equals(other.getBody());
+      boolean envEqual = this.env.equals(other.getEnv());
+      
+      if (this.args.size() == other.getArgs().size()) {
+         for (int i = 0; i < this.args.size(); i++) {
+            if (!this.args.get(i).equals(other.getArgs().get(i))) {
+               argsEqual = false;
+               break;
+            }
+         }
+      }
+      else {
+         argsEqual = false;
+      }
+      
+      if(argsEqual && bodyEqual && envEqual) {
+         return true;
+      }
+      else {
+         return false;
+      }
+   }
 }

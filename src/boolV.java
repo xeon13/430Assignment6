@@ -9,4 +9,12 @@ public class boolV extends Value {
    public String toString() {
       return this.cas;
    }
+   
+   public boolean equals(boolV other) {
+      if(this.cas.equals(other.toString())) {
+         return true;
+      }
+      
+      return false;
+   }
 }

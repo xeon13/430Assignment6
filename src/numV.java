@@ -9,4 +9,12 @@ public class numV extends Value {
    public String toString() {
       return "" + this.n;
    }
+   
+   public boolean equals(numV other) {
+      if (this.toString().equals(other.toString())) {
+         return true;
+      }
+      
+      return false;
+   }
 }
