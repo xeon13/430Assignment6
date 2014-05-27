@@ -110,6 +110,20 @@ public class Driver {
       else if (e instanceof binopC) {
           return binopDecider(e.getOpName(), interp(e.getLeft() env), interp(e.getRight()));
       }
+      else if (e instanceof ifC) {
+          ExprC final_con = interp(e.getCase(), env);
+          if (final_con instanceof boolV) {
+              if (final_con.toString().equals("true")) {
+                  return interp(e.getTrue(), env);
+              }
+              else {
+                  return interp(e.getFalse(), env);
+              }
+          }
+          else {
+              throw new NotBoolVException();
+          }
+      }
       
       return null;
    }
