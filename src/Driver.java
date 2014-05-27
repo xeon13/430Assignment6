@@ -195,7 +195,7 @@ public class Driver {
                }
            }
            else {
-               throw new NotNumberException();
+               return new boolV("false");
            }
        }
        else {
