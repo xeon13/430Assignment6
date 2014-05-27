@@ -10,6 +10,10 @@ public class numV extends Value {
       return "" + this.n;
    }
    
+   public double getNumber() {
+       return n;
+   }
+   
    public boolean equals(Object other) {
       if (this.toString().equals(other.toString())) {
          return true;

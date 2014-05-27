@@ -107,8 +107,83 @@ public class Driver {
             throw new InvalidValueException();
          }
       }
+      else if (e instanceof binopC) {
+          return binopDecider(e.getOpName(), interp(e.getLeft() env), interp(e.getRight()));
+      }
       
       return null;
+   }
+   
+   private Value binopDecider(String op, Value l, Value r) {
+       if (op.equals("+")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               return new numV(l.getNumber() + r.getNumber());
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else if (op.equals("-")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               return new numV(l.getNumber() - r.getNumber());
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else if (op.equals("*")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               return new numV(l.getNumber() * r.getNumber());
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else if (op.equals("/")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               return new numV(l.getNumber() / r.getNumber());
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else if (op.equals("<=")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               if (l.getNumber() <= r.getNumber()) {
+                   return new boolV("true");
+               }
+               else {
+                   return new boolV("false");
+               }
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else if (op.equals("eq?")) {
+           if ((l instanceof numV) && (r instanceof numV)) {
+               if (l.getNumber().equals(r.getNumber())) {
+                   return new boolV("true");
+               }
+               else {
+                   return new boolV("false");
+               }
+           }
+           else if ((l instanceof boolV) && (r instanceof boolV)) {
+               if (l.equals(r)) {
+                   return new boolV("true");
+               }
+               else {
+                   return new boolV("false");
+               }
+           }
+           else {
+               throw new NotNumberException();
+           }
+       }
+       else {
+           return new boolV("false");
+       }
    }
    
    private List<Value> interpArgs(List<ExprC> args, Environment env) {
