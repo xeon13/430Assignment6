@@ -82,9 +82,12 @@ public class Driver {
       return null;
    }
    
-   private Value interp(ExprC e, Environment env) throws InvalidValueException {
+   public Value interp(ExprC e, Environment env) throws InvalidValueException, NotNumberException, NotBoolVException {
       if (e instanceof numC) {
          return new numV(((numC) e).getNumber());
+      }
+      else if (e instanceof idC) {
+         return env.lookup(((idC) e).getSymbol());
       }
       else if (e instanceof boolC) {
          return new boolV(((boolC) e).getCase());
@@ -108,16 +111,16 @@ public class Driver {
          }
       }
       else if (e instanceof binopC) {
-          return binopDecider(e.getOpName(), interp(e.getLeft() env), interp(e.getRight()));
+          return binopDecider(((binopC) e).getOpName(), interp(((binopC) e).getLeft(), env), interp(((binopC) e).getRight(), env));
       }
       else if (e instanceof ifC) {
-          ExprC final_con = interp(e.getCase(), env);
+          Value final_con = interp(((ifC) e).getCase(), env);
           if (final_con instanceof boolV) {
               if (final_con.toString().equals("true")) {
-                  return interp(e.getTrue(), env);
+                  return interp(((ifC) e).getTrue(), env);
               }
               else {
-                  return interp(e.getFalse(), env);
+                  return interp(((ifC) e).getFalse(), env);
               }
           }
           else {
@@ -128,10 +131,10 @@ public class Driver {
       return null;
    }
    
-   private Value binopDecider(String op, Value l, Value r) {
+   private Value binopDecider(String op, Value l, Value r) throws NotNumberException {
        if (op.equals("+")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               return new numV(l.getNumber() + r.getNumber());
+               return new numV(((numV) l).getNumber() + ((numV) r).getNumber());
            }
            else {
                throw new NotNumberException();
@@ -139,7 +142,7 @@ public class Driver {
        }
        else if (op.equals("-")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               return new numV(l.getNumber() - r.getNumber());
+               return new numV(((numV) l).getNumber() - ((numV) r).getNumber());
            }
            else {
                throw new NotNumberException();
@@ -147,7 +150,7 @@ public class Driver {
        }
        else if (op.equals("*")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               return new numV(l.getNumber() * r.getNumber());
+               return new numV(((numV) l).getNumber() * ((numV) r).getNumber());
            }
            else {
                throw new NotNumberException();
@@ -155,7 +158,7 @@ public class Driver {
        }
        else if (op.equals("/")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               return new numV(l.getNumber() / r.getNumber());
+               return new numV(((numV) l).getNumber() / ((numV) r).getNumber());
            }
            else {
                throw new NotNumberException();
@@ -163,7 +166,7 @@ public class Driver {
        }
        else if (op.equals("<=")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               if (l.getNumber() <= r.getNumber()) {
+               if (((numV) l).getNumber() <= ((numV) r).getNumber()) {
                    return new boolV("true");
                }
                else {
@@ -176,7 +179,7 @@ public class Driver {
        }
        else if (op.equals("eq?")) {
            if ((l instanceof numV) && (r instanceof numV)) {
-               if (l.getNumber().equals(r.getNumber())) {
+               if (((numV) l).getNumber() == (((numV) r).getNumber())) {
                    return new boolV("true");
                }
                else {
@@ -207,7 +210,7 @@ public class Driver {
          try {
             toReturn.add(interp(arg, env));
          } 
-         catch (InvalidValueException e) {
+         catch (Exception e) {
             e.printStackTrace();
          }
       }
@@ -237,7 +240,7 @@ public class Driver {
       try {
          return serialize(interp(parse(expr), new Environment()));
       } 
-      catch (InvalidValueException e) {
+      catch (Exception e) {
          e.printStackTrace();
       }
       
