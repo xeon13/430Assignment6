@@ -108,7 +108,7 @@ public class Driver {
          }
       }
       else if (e instanceof binopC) {
-          return binopDecider(e.getOpName(), interp(e.getLeft() env), interp(e.getRight()));
+          return binopDecider(e.getOpName(), interp(e.getLeft(), env), interp(e.getRight(), env));
       }
       else if (e instanceof ifC) {
           ExprC final_con = interp(e.getCase(), env);
